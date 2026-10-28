@@ -34,5 +34,8 @@ node_modules/
 # Operating system
 .DS_Store
 Thumbs.db
+<<<<<<< HEAD
 # Widget Preview related
 .widget_preview/
+=======
+>>>>>>> friend/app
