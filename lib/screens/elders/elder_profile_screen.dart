@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
-import '../routines/routines_screen.dart';
+import '../routines/routine_history_screen.dart';
+import '../calls/voice_call_screen.dart';
 
 class ElderProfileScreen extends StatelessWidget {
   const ElderProfileScreen({super.key});
@@ -234,7 +235,7 @@ class ElderProfileScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const RoutinesScreen(),
+                  builder: (_) => const RoutineHistoryScreen(),
                   ),
                   );
                   },
@@ -252,14 +253,12 @@ class ElderProfileScreen extends StatelessWidget {
           const SizedBox(height: 10),
           FilledButton.icon(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'Calling is not connected yet. Add phone-call integration to enable this.',
-                  ),
-                ),
-              );
-            },
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => const VoiceCallScreen(),
+    ),
+  );
+},
             icon: const Icon(Icons.call_rounded),
             label: const Text('Call Elder'),
             style: FilledButton.styleFrom(

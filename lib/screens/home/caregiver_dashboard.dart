@@ -1,55 +1,29 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> friend/app
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
 import '../../widgets/bottom_nav_bar.dart';
-<<<<<<< HEAD
-import '../alerts/alerts_screen.dart';
-import '../elders/elders_screen.dart';
-import '../routines/routines_screen.dart';
-import '../digital_twin/ai_digital_twin_screen.dart';
 import '../../widgets/digital_human_avatar.dart';
-=======
 import '../../widgets/medication_card.dart';
 import '../../widgets/quick_action_button.dart';
 import '../alerts/alerts_screen.dart';
+import '../digital_twin/ai_digital_twin_screen.dart';
 import '../elders/elders_screen.dart';
-import '../profile/profile_screen.dart';
 import '../medication/medication_screen.dart';
-import '../routines/routines_screen.dart';
->>>>>>> friend/app
+import '../routines/routine_history_screen.dart';
 
 class CaregiverDashboard extends StatefulWidget {
   const CaregiverDashboard({super.key});
 
   @override
-<<<<<<< HEAD
   State<CaregiverDashboard> createState() =>
       _CaregiverDashboardState();
-=======
-  State<CaregiverDashboard> createState() => _CaregiverDashboardState();
->>>>>>> friend/app
 }
 
 class _CaregiverDashboardState extends State<CaregiverDashboard> {
   int _currentIndex = 0;
 
-<<<<<<< HEAD
   String _elderName = 'Arthur Pendelton';
   String _elderAge = '82 years';
-
-=======
->>>>>>> friend/app
-  final List<Widget> _screens = const [
-    SizedBox.shrink(),
-    EldersScreen(),
-    AlertsScreen(),
-<<<<<<< HEAD
-    RoutinesScreen(),
-  ];
 
   static const Color _background = Color(0xFFF5F7FB);
   static const Color _border = Color(0xFFE7ECF3);
@@ -57,24 +31,25 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
   static const Color _green = Color(0xFF16A36A);
   static const Color _red = Color(0xFFEF6B70);
 
-  void _onNavigationTap(int index) {
-=======
-    ProfileScreen(),
+  final List<Widget> _screens = const [
+    SizedBox.shrink(),
+    EldersScreen(),
+    AlertsScreen(),
+    RoutineHistoryScreen(),
   ];
 
   void _onNavigationTap(int index) {
-    if (index == 0) {
-      setState(() => _currentIndex = 0);
-      return;
-    }
+    if (index < 0 || index >= _screens.length) return;
 
->>>>>>> friend/app
-    setState(() => _currentIndex = index);
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   void _showMessage(String message) {
+    if (!mounted) return;
+
     ScaffoldMessenger.of(context).showSnackBar(
-<<<<<<< HEAD
       SnackBar(
         content: Text(message),
         behavior: SnackBarBehavior.floating,
@@ -131,152 +106,20 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
       ),
       subtitle: Text(age),
       trailing: _elderName == name
-          ? const Icon(Icons.check_circle, color: _green)
+          ? const Icon(
+              Icons.check_circle,
+              color: _green,
+            )
           : null,
       onTap: () {
         setState(() {
           _elderName = name;
           _elderAge = age;
         });
+
         Navigator.pop(dialogContext);
         _showMessage('$name selected.');
       },
-    );
-  }
-
-  void _showMoreDetails() {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      backgroundColor: Colors.white,
-      builder: (context) => SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(22, 8, 22, 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Digital Twin Details',
-                style: TextStyle(
-                  fontSize: 23,
-                  fontWeight: FontWeight.w800,
-                  color: AppTheme.navy,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                '$_elderName · Illustrative overview',
-                style: const TextStyle(color: AppTheme.muted),
-              ),
-              const SizedBox(height: 20),
-              _detailRow(
-                Icons.water_drop_outlined,
-                'Hydration',
-                '72%',
-                AppTheme.blue,
-              ),
-              _detailRow(
-                Icons.directions_walk_rounded,
-                'Mobility',
-                '58%',
-                _purple,
-              ),
-              _detailRow(
-                Icons.people_outline_rounded,
-                'Social activity',
-                '84%',
-                AppTheme.blue,
-              ),
-              _detailRow(
-                Icons.medication_outlined,
-                'Medication',
-                '41%',
-                _red,
-              ),
-              const SizedBox(height: 14),
-              const Text(
-                'Suggested care actions',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                  color: AppTheme.navy,
-                ),
-              ),
-              const SizedBox(height: 10),
-              _suggestion(
-                Icons.water_drop_rounded,
-                'Offer water before 10 AM',
-              ),
-              _suggestion(
-                Icons.directions_walk_rounded,
-                'Short walk after lunch',
-              ),
-              _suggestion(
-                Icons.medication_rounded,
-                'Confirm meds at 9:30 AM',
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'These values are sample UI data. They are not '
-                'generated by a connected AI model or medical device.',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppTheme.muted,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _detailRow(
-    IconData icon,
-    String label,
-    String value,
-    Color color,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 17),
-      child: Row(
-        children: [
-          Icon(icon, color: color),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _suggestion(IconData icon, String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.check_circle_outline_rounded,
-            color: _green,
-            size: 19,
-          ),
-          const SizedBox(width: 10),
-          Expanded(child: Text(text)),
-        ],
-      ),
     );
   }
 
@@ -293,8 +136,14 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
         content: Text(
           'Calling $_elderName is not connected yet. '
           'Connect a calling service to enable real calls.',
-=======
-      SnackBar(content: Text(message)),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -302,18 +151,19 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
     showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
+        icon: const Icon(
+          Icons.sos_rounded,
+          color: _red,
+          size: 34,
+        ),
         title: const Text('Emergency SOS'),
         content: const Text(
           'This is a demonstration only. No emergency contact '
           'or emergency service will be notified.',
->>>>>>> friend/app
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-<<<<<<< HEAD
-            child: const Text('Close'),
-=======
             child: const Text('Cancel'),
           ),
           FilledButton(
@@ -322,19 +172,18 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
               _showMessage('Demo only: SOS was not sent.');
             },
             child: const Text('OK'),
->>>>>>> friend/app
           ),
         ],
       ),
     );
   }
 
-<<<<<<< HEAD
   void _showTwinAssistant() {
     showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
-      builder: (context) => SafeArea(
+      backgroundColor: Colors.white,
+      builder: (sheetContext) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(22, 8, 22, 28),
           child: Column(
@@ -351,19 +200,22 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
               ),
               const SizedBox(height: 8),
               const Text(
-                'This demo assistant highlights the sample care '
-                'suggestions shown on this screen. It is not a '
-                'connected AI service.',
+                'Explore the sample care insights and suggested '
+                'actions. This assistant is not connected to a '
+                'live AI service.',
                 style: TextStyle(color: AppTheme.muted),
               ),
               const SizedBox(height: 16),
-              FilledButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _showMoreDetails();
-                },
-                icon: const Icon(Icons.insights_rounded),
-                label: const Text('Review twin details'),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: () {
+                    Navigator.pop(sheetContext);
+                    _openDigitalTwinDetails();
+                  },
+                  icon: const Icon(Icons.insights_rounded),
+                  label: const Text('Review twin details'),
+                ),
               ),
             ],
           ),
@@ -372,26 +224,44 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
     );
   }
 
-=======
->>>>>>> friend/app
+  void _openDigitalTwinDetails() {
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (_) => const AiDigitalTwinScreen(),
+      ),
+    );
+  }
+
+  void _openMedicationSchedule() {
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (_) => const MedicationScreen(),
+      ),
+    );
+  }
+
+  void _openRoutineHistory() {
+    _onNavigationTap(3);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_currentIndex != 0) {
-      return Scaffold(
-<<<<<<< HEAD
-        backgroundColor: _background,
-=======
->>>>>>> friend/app
-        body: _screens[_currentIndex],
-        bottomNavigationBar: SuwaniBottomNavBar(
-          currentIndex: _currentIndex,
-          onTap: _onNavigationTap,
-        ),
-      );
-    }
+  return Scaffold(
+    backgroundColor: _background,
+    body: _screens[_currentIndex],
+    bottomNavigationBar: _currentIndex == 3
+        ? null
+        : SuwaniBottomNavBar(
+            currentIndex: _currentIndex,
+            onTap: _onNavigationTap,
+          ),
+  );
+}
 
     return Scaffold(
-<<<<<<< HEAD
       backgroundColor: _background,
       body: SafeArea(
         child: LayoutBuilder(
@@ -405,7 +275,9 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
               ),
               child: Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1180),
+                  constraints: const BoxConstraints(
+                    maxWidth: 1180,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -414,11 +286,16 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
                       _buildSelectedElder(),
                       const SizedBox(height: 22),
                       _buildTwinCard(isWide: isWide),
-                      const SizedBox(height: 16),
-                      _buildCallAction(),
+                      const SizedBox(height: 18),
+                      _buildRoutineSummary(),
+                      const SizedBox(height: 22),
+                      _buildMedicationSection(),
+                      const SizedBox(height: 22),
+                      _buildQuickActions(),
                       const SizedBox(height: 18),
                       const Text(
-                        'Illustrative information only · Not a medical diagnosis',
+                        'Illustrative information only · '
+                        'Not a medical diagnosis',
                         style: TextStyle(
                           fontSize: 11,
                           color: AppTheme.muted,
@@ -436,245 +313,8 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
         onPressed: _showTwinAssistant,
         backgroundColor: AppTheme.blue,
         foregroundColor: Colors.white,
-        elevation: 4,
-        shape: const CircleBorder(),
         tooltip: 'Open Twin Assistant',
-        child: const Text(
-          'T',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w800,
-=======
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Greeting and caregiver profile
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Hello, Clara',
-                          style: TextStyle(
-                            color: AppTheme.navy,
-                            fontSize: 26,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          'Here are your updates for today',
-                          style: TextStyle(
-                            color: AppTheme.muted,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: AppTheme.blue.withValues(alpha: 0.12),
-                    child: const Icon(
-                      Icons.person_rounded,
-                      color: AppTheme.blue,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 24),
-
-              // Overview
-              Row(
-                children: [
-                  Expanded(
-                    child: _overviewCard(
-                      title: 'ACTIVE ELDERS',
-                      value: '4 Elders',
-                      subtitle: 'All actively monitored',
-                      icon: Icons.people_alt_outlined,
-                      iconColor: AppTheme.blue,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _overviewCard(
-                      title: 'ACTIVE ALERTS',
-                      value: '2 Urgent',
-                      subtitle: 'Requires attention',
-                      icon: Icons.notifications_active_outlined,
-                      iconColor: AppTheme.coral,
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 26),
-
-              // Today's routines
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Today's Routines",
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w800,
-                      color: AppTheme.navy,
-                    ),
-                  ),
-                  Text(
-                    '68% Done',
-                    style: TextStyle(
-                      color: AppTheme.blue,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: const Color(0xFFE8ECF3)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: const LinearProgressIndicator(
-                        value: 0.68,
-                        minHeight: 9,
-                        backgroundColor: Color(0xFFE8EDF7),
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          AppTheme.blue,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 13),
-                    const Text(
-                      '12 of 18 completed. Next routine at 10:00 AM.',
-                      style: TextStyle(
-                        color: AppTheme.muted,
-                        fontSize: 13,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (_) => const RoutinesScreen(),
-                            ),
-                          );
-                        },
-                        child: const Text('View routines'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 26),
-
-              // Medication heading
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Expanded(
-                    child: Text(
-                      'Medication Reminders',
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.w800,
-                        color: AppTheme.navy,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (_) => const MedicationScreen(),
-                        ),
-                      );
-                    },
-                    child: const Text('View Schedule'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-
-              const MedicationCard(
-                medicine: 'Donepezil (Aricept)',
-                dosage: '10 mg',
-                elderName: 'Arthur Pendelton',
-                time: '09:30 AM',
-              ),
-              const MedicationCard(
-                medicine: 'Metformin',
-                dosage: '500 mg',
-                elderName: 'Martha Vance',
-                time: '10:00 AM',
-              ),
-
-              const SizedBox(height: 18),
-
-              const Text(
-                'Quick Actions',
-                style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w800,
-                  color: AppTheme.navy,
-                ),
-              ),
-              const SizedBox(height: 14),
-
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  QuickActionButton(
-                    icon: Icons.person_add_alt_1_rounded,
-                    label: 'Add Elder',
-                    color: AppTheme.blue,
-                    onTap: () => _showMessage(
-                      'Add Elder form will be added next.',
-                    ),
-                  ),
-                  QuickActionButton(
-                    icon: Icons.call_outlined,
-                    label: 'Start Call',
-                    color: AppTheme.green,
-                    onTap: () => _showMessage(
-                      'Calling is not connected yet.',
-                    ),
-                  ),
-                  QuickActionButton(
-                    icon: Icons.sos_rounded,
-                    label: 'SOS Emergency',
-                    color: AppTheme.coral,
-                    onTap: _showSosConfirmation,
-                  ),
-                ],
-              ),
-            ],
->>>>>>> friend/app
-          ),
-        ),
+        child: const Icon(Icons.auto_awesome_rounded),
       ),
       bottomNavigationBar: SuwaniBottomNavBar(
         currentIndex: _currentIndex,
@@ -683,7 +323,6 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
     );
   }
 
-<<<<<<< HEAD
   Widget _buildHeader() {
     return Row(
       children: [
@@ -735,29 +374,19 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
   }
 
   Widget _buildSelectedElder() {
-=======
-  Widget _overviewCard({
-    required String title,
-    required String value,
-    required String subtitle,
-    required IconData icon,
-    required Color iconColor,
-  }) {
->>>>>>> friend/app
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
-<<<<<<< HEAD
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: _border),
       ),
       child: Row(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 27,
-            backgroundColor: const Color(0xFFE5F0FF),
-            child: const Icon(
+            backgroundColor: Color(0xFFE5F0FF),
+            child: Icon(
               Icons.person_rounded,
               size: 33,
               color: AppTheme.blue,
@@ -818,7 +447,8 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
         border: Border.all(color: _border),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF152B4D).withValues(alpha: 0.035),
+            color: const Color(0xFF152B4D)
+                .withValues(alpha: 0.035),
             blurRadius: 22,
             offset: const Offset(0, 8),
           ),
@@ -844,7 +474,7 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
                     ),
                     const SizedBox(height: 7),
                     const Text(
-                      'Illustrative digital twin · based on routine, '
+                      'Illustrative digital twin · based on routines, '
                       'activity, and caregiver notes',
                       style: TextStyle(
                         fontSize: 12,
@@ -868,10 +498,14 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.circle, color: _green, size: 8),
+                    Icon(
+                      Icons.circle,
+                      color: _green,
+                      size: 8,
+                    ),
                     SizedBox(width: 6),
                     Text(
-                      'Stable',
+                      'Demo',
                       style: TextStyle(
                         color: Color(0xFF147D50),
                         fontWeight: FontWeight.w700,
@@ -906,14 +540,7 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const AiDigitalTwinScreen(),
-                    ),
-                  );
-                },
+              onPressed: _openDigitalTwinDetails,
               style: FilledButton.styleFrom(
                 backgroundColor: const Color(0xFFFFE9E8),
                 foregroundColor: const Color(0xFFC94F55),
@@ -946,7 +573,7 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Prediction levels',
+          'Care indicators',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w800,
@@ -1009,89 +636,88 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
     );
   }
 
-
-Widget _buildHumanGraphic() {
-  return Container(
-    width: double.infinity,
-    padding: const EdgeInsets.fromLTRB(12, 16, 12, 18),
-    decoration: BoxDecoration(
-      color: const Color(0xFFF0FAF4),
-      borderRadius: BorderRadius.circular(22),
-      border: Border.all(
-        color: const Color(0xFFD9F0E2),
-      ),
-    ),
-    child: Column(
-      children: [
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.blur_on_rounded,
-              size: 16,
-              color: Color(0xFF398663),
-            ),
-            SizedBox(width: 7),
-            Text(
-              'INTERACTIVE DIGITAL HUMAN',
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
-                color: Color(0xFF398663),
-              ),
-            ),
-          ],
+  Widget _buildHumanGraphic() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(12, 16, 12, 18),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF0FAF4),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(
+          color: const Color(0xFFD9F0E2),
         ),
-        const SizedBox(height: 10),
-
-        // Reusable avatar from lib/widgets/digital_human_avatar.dart
-        const DigitalHumanAvatar(),
-
-        const SizedBox(height: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 7,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(
-              color: const Color(0xFFD9F0E2),
-            ),
-          ),
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
+      ),
+      child: Column(
+        children: [
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.touch_app_rounded,
-                size: 15,
+                Icons.blur_on_rounded,
+                size: 16,
                 color: Color(0xFF398663),
               ),
-              SizedBox(width: 6),
-              Text(
-                'Explore care areas',
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF398663),
+              SizedBox(width: 7),
+              Flexible(
+                child: Text(
+                  'INTERACTIVE DIGITAL HUMAN',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.0,
+                    color: Color(0xFF398663),
+                  ),
                 ),
               ),
             ],
           ),
-        ),
-      ],
-    ),
-  );
-}
+          const SizedBox(height: 10),
+          const DigitalHumanAvatar(),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 7,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(
+                color: const Color(0xFFD9F0E2),
+              ),
+            ),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.touch_app_rounded,
+                  size: 15,
+                  color: Color(0xFF398663),
+                ),
+                SizedBox(width: 6),
+                Text(
+                  'Explore care areas',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF398663),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildSuggestionsPanel() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Suggestions',
+          'Care suggestions',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w800,
@@ -1115,7 +741,7 @@ Widget _buildHumanGraphic() {
         const SizedBox(height: 11),
         _suggestionCard(
           Icons.medication_rounded,
-          'Confirm meds at 9:30 AM',
+          'Confirm medication at 9:30 AM',
           const Color(0xFFFFEEEE),
           _red,
         ),
@@ -1157,108 +783,166 @@ Widget _buildHumanGraphic() {
     );
   }
 
-  Widget _buildCallAction() {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(18),
-      child: InkWell(
-        onTap: _showCallInfo,
-        borderRadius: BorderRadius.circular(18),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 18,
-            vertical: 17,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: _border),
-          ),
-          child: const Row(
-            children: [
-              CircleAvatar(
-                radius: 22,
-                backgroundColor: Color(0xFFFFE9E8),
-                child: Icon(
-                  Icons.call_rounded,
-                  color: _red,
-                  size: 23,
-                ),
-              ),
-              SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Start Call',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w800,
-                        color: AppTheme.navy,
-                      ),
-                    ),
-                    SizedBox(height: 3),
-                    Text(
-                      'Connect with your selected elder',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppTheme.muted,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 16,
-                color: AppTheme.muted,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-=======
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFE8ECF3)),
+  Widget _buildRoutineSummary() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: _border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: iconColor, size: 25),
-          const SizedBox(height: 13),
-          Text(
-            title,
-            style: const TextStyle(
-              color: AppTheme.muted,
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.5,
+          Row(
+            children: [
+              const Expanded(
+                child: Text(
+                  "Today's Routines",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: AppTheme.navy,
+                  ),
+                ),
+              ),
+              Text(
+                '68% done',
+                style: TextStyle(
+                  color: AppTheme.blue,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: const LinearProgressIndicator(
+              value: 0.68,
+              minHeight: 9,
+              backgroundColor: Color(0xFFE8EDF7),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                AppTheme.blue,
+              ),
             ),
           ),
-          const SizedBox(height: 7),
-          Text(
-            value,
-            style: const TextStyle(
-              color: AppTheme.navy,
-              fontSize: 19,
-              fontWeight: FontWeight.w800,
+          const SizedBox(height: 12),
+          const Text(
+            '12 of 18 completed. Sample dashboard data.',
+            style: TextStyle(
+              color: AppTheme.muted,
+              fontSize: 13,
             ),
           ),
-          const SizedBox(height: 6),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              color: AppTheme.muted,
-              fontSize: 11,
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: _openRoutineHistory,
+              child: const Text('View routine history'),
             ),
           ),
         ],
       ),
     );
   }
+
+  Widget _buildMedicationSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Expanded(
+              child: Text(
+                'Medication Reminders',
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.navy,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: _openMedicationSchedule,
+              child: const Text('View Schedule'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        const MedicationCard(
+          medicine: 'Donepezil (Aricept)',
+          dosage: '10 mg',
+          elderName: 'Arthur Pendelton',
+          time: '09:30 AM',
+        ),
+        const MedicationCard(
+          medicine: 'Metformin',
+          dosage: '500 mg',
+          elderName: 'Martha Vance',
+          time: '10:00 AM',
+        ),
+        const SizedBox(height: 6),
+        const Text(
+          'Sample reminders only. Verify medication details '
+          'against the elder’s actual prescription.',
+          style: TextStyle(
+            fontSize: 11,
+            color: AppTheme.muted,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildQuickActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Quick Actions',
+          style: TextStyle(
+            fontSize: 19,
+            fontWeight: FontWeight.w800,
+            color: AppTheme.navy,
+          ),
+        ),
+        const SizedBox(height: 14),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: QuickActionButton(
+                icon: Icons.person_add_alt_1_rounded,
+                label: 'Add Elder',
+                color: AppTheme.blue,
+                onTap: () {
+                  _onNavigationTap(1);
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: QuickActionButton(
+                icon: Icons.call_outlined,
+                label: 'Start Call',
+                color: _green,
+                onTap: _showCallInfo,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: QuickActionButton(
+                icon: Icons.sos_rounded,
+                label: 'SOS Emergency',
+                color: _red,
+                onTap: _showSosConfirmation,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 }
->>>>>>> friend/app
