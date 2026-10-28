@@ -10,6 +10,7 @@ import '../digital_twin/ai_digital_twin_screen.dart';
 import '../elders/elders_screen.dart';
 import '../medication/medication_screen.dart';
 import '../routines/routine_history_screen.dart';
+import '../emergency/emergency_sos_screen.dart';
 
 class CaregiverDashboard extends StatefulWidget {
   const CaregiverDashboard({super.key});
@@ -937,9 +938,16 @@ class _CaregiverDashboardState extends State<CaregiverDashboard> {
                 icon: Icons.sos_rounded,
                 label: 'SOS Emergency',
                 color: _red,
-                onTap: _showSosConfirmation,
-              ),
-            ),
+                onTap: () {
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => const EmergencySosScreen(),
+        ),
+      );
+    },
+  ),
+),
+        
           ],
         ),
       ],
